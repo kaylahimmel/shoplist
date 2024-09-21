@@ -1,35 +1,46 @@
+import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TextInput, View, Text } from "react-native";
+
 import { theme } from "../theme";
 import { ShoppingListItem } from "../components/ShoppingListItem";
-import { useState } from "react";
+import { ShoppingListItemType } from "./types/shoppingList.types";
+import { orderList } from "./utils/orderList";
+import { getFromStorage, setSaveToStorage } from "./utils/storage";
 
-type ShoppingListItemType = {
-  id: string;
-  name: string;
-  completedAtTimestamp?: number;
-};
+const storageKey = "shopping-list";
 
 export default function App() {
   const [shoppingList, setShoppingList] = useState<ShoppingListItemType[]>([]);
   const [value, setValue] = useState<string>();
 
+  useEffect(() => {
+    const fetchInitial = async () => {
+      const data = await getFromStorage(storageKey);
+      if (data) {
+        setShoppingList(data);
+      }
+    };
+    fetchInitial();
+  }, [])
+
   const handleSubmit = () => {
     if (value) {
       const newShoppingList = [
-        { id: new Date().toTimeString(), 
+        { id: new Date().toISOString(), 
           name: value, 
           lastUpdatedTimestamp: Date.now() 
         },
         ...shoppingList,
       ];
       setShoppingList(newShoppingList);
+      setSaveToStorage(storageKey, shoppingList);
       setValue("");
     }
   };
 
   const handleDelete = (id: string) => {
     const newShoppingList = shoppingList.filter(item => item.id !== id);
-
+    setSaveToStorage(storageKey, shoppingList);
     setShoppingList(newShoppingList);
   };
 
@@ -41,18 +52,19 @@ export default function App() {
           completedAtTimestamp: item.completedAtTimestamp
             ? undefined
             : Date.now(),
-          lastUpdatedTimestamp: Date.now(),
+          lastUpdatedTimestamp: Date.now() 
         };
       } else {
         return item;
       }
     });
+    setSaveToStorage(storageKey, newShoppingList);
     setShoppingList(newShoppingList);
   };
 
   return (
     <FlatList
-      data={shoppingList}
+      data={orderList(shoppingList)}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       stickyHeaderIndices={[0]}
