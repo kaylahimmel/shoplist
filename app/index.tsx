@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, TextInput, View, Text } from "react-native";
-
+import { FlatList, StyleSheet, TextInput, View, Text, LayoutAnimation } from "react-native";
+import * as Haptics from 'expo-haptics';
 import { theme } from "../theme";
 import { ShoppingListItem } from "../components/ShoppingListItem";
 import { ShoppingListItemType } from "./types/shoppingList.types";
@@ -12,11 +12,13 @@ const storageKey = "shopping-list";
 export default function App() {
   const [shoppingList, setShoppingList] = useState<ShoppingListItemType[]>([]);
   const [value, setValue] = useState<string>();
+  const animateEaseIn = LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
   useEffect(() => {
     const fetchInitial = async () => {
       const data = await getFromStorage(storageKey);
       if (data) {
+        animateEaseIn;
         setShoppingList(data);
       }
     };
@@ -32,6 +34,7 @@ export default function App() {
         },
         ...shoppingList,
       ];
+      animateEaseIn;
       setShoppingList(newShoppingList);
       setSaveToStorage(storageKey, shoppingList);
       setValue("");
@@ -41,12 +44,19 @@ export default function App() {
   const handleDelete = (id: string) => {
     const newShoppingList = shoppingList.filter(item => item.id !== id);
     setSaveToStorage(storageKey, shoppingList);
+    animateEaseIn;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
     setShoppingList(newShoppingList);
   };
 
   const handleToggleComplete = (id: string) => {
     const newShoppingList = shoppingList.map((item) => {
       if (item.id === id) {
+        if (item.completedAtTimestamp) {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+        } else {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+        }
         return {
           ...item,
           completedAtTimestamp: item.completedAtTimestamp
@@ -59,6 +69,7 @@ export default function App() {
       }
     });
     setSaveToStorage(storageKey, newShoppingList);
+    animateEaseIn;
     setShoppingList(newShoppingList);
   };
 
