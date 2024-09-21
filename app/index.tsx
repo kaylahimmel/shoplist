@@ -6,6 +6,7 @@ import { ShoppingListItem } from "../components/ShoppingListItem";
 import { ShoppingListItemType } from "./types/shoppingList.types";
 import { orderList } from "./utils/orderList";
 import { getFromStorage, setSaveToStorage } from "./utils/storage";
+import {registerPushNotificationsAsync} from "./utils/pushNotifications";
 
 const storageKey = "shopping-list";
 
