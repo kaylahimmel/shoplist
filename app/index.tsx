@@ -1,19 +1,27 @@
-import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, TextInput, View, Text, LayoutAnimation } from "react-native";
+import { useEffect, useState } from 'react';
+import {
+  FlatList,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  LayoutAnimation,
+} from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { theme } from "../theme";
-import { ShoppingListItem } from "../components/ShoppingListItem";
-import { ShoppingListItemType } from "./types/shoppingList.types";
-import { orderList } from "./utils/orderList";
-import { getFromStorage, setSaveToStorage } from "./utils/storage";
-import {registerPushNotificationsAsync} from "./utils/pushNotifications";
+import { theme } from '../theme';
+import { ShoppingListItem } from '../components/ShoppingListItem';
+import { ShoppingListItemType } from '../types/shoppingList.types';
+import { orderList } from '../utils/orderList';
+import { getFromStorage, setSaveToStorage } from '../utils/storage';
 
-const storageKey = "shopping-list";
+const storageKey = 'shopping-list';
 
 export default function App() {
   const [shoppingList, setShoppingList] = useState<ShoppingListItemType[]>([]);
   const [value, setValue] = useState<string>();
-  const animateEaseIn = LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  const animateEaseIn = LayoutAnimation.configureNext(
+    LayoutAnimation.Presets.easeInEaseOut
+  );
 
   useEffect(() => {
     const fetchInitial = async () => {
@@ -24,29 +32,30 @@ export default function App() {
       }
     };
     fetchInitial();
-  }, [])
+  }, []);
 
   const handleSubmit = () => {
     if (value) {
       const newShoppingList = [
-        { id: new Date().toISOString(), 
-          name: value, 
-          lastUpdatedTimestamp: Date.now() 
+        {
+          id: new Date().toISOString(),
+          name: value,
+          lastUpdatedTimestamp: Date.now(),
         },
         ...shoppingList,
       ];
       animateEaseIn;
       setShoppingList(newShoppingList);
       setSaveToStorage(storageKey, shoppingList);
-      setValue("");
+      setValue('');
     }
   };
 
   const handleDelete = (id: string) => {
-    const newShoppingList = shoppingList.filter(item => item.id !== id);
+    const newShoppingList = shoppingList.filter((item) => item.id !== id);
     setSaveToStorage(storageKey, shoppingList);
     animateEaseIn;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setShoppingList(newShoppingList);
   };
 
@@ -54,16 +63,16 @@ export default function App() {
     const newShoppingList = shoppingList.map((item) => {
       if (item.id === id) {
         if (item.completedAtTimestamp) {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
         } else {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         }
         return {
           ...item,
           completedAtTimestamp: item.completedAtTimestamp
             ? undefined
             : Date.now(),
-          lastUpdatedTimestamp: Date.now() 
+          lastUpdatedTimestamp: Date.now(),
         };
       } else {
         return item;
@@ -87,19 +96,20 @@ export default function App() {
       }
       ListHeaderComponent={
         <TextInput
-          placeholder={"ex: bread"}
+          placeholder={'ex: bread'}
           style={styles.textInput}
           value={value}
           onChangeText={setValue}
-          returnKeyType={"done"}
+          returnKeyType={'done'}
           onSubmitEditing={handleSubmit}
         />
       }
       renderItem={({ item }) => (
-        <ShoppingListItem 
-          name={item.name} 
-          onDelete={() => handleDelete(item.id)} 
-          onToggleComplete={() => handleToggleComplete(item.id)} isCompleted={Boolean(item.completedAtTimestamp)} 
+        <ShoppingListItem
+          name={item.name}
+          onDelete={() => handleDelete(item.id)}
+          onToggleComplete={() => handleToggleComplete(item.id)}
+          isCompleted={Boolean(item.completedAtTimestamp)}
         />
       )}
     ></FlatList>
@@ -126,8 +136,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colorWhite,
   },
   listEmptyContainer: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginVertical: 18,
   },
 });
