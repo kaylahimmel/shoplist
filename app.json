@@ -5,18 +5,18 @@
         "backgroundColor": "#ffffff",
         "foregroundImage": "./assets/adaptive-icon.png"
       },
-      "package": "com.taskly.app"
+      "package": "com.shoplist.app"
     },
     "icon": "./assets/icon.png",
     "ios": {
-      "bundleIdentifier": "com.taskly.app",
+      "bundleIdentifier": "com.shoplist.app",
       "supportsTablet": true
     },
-    "name": "taskly",
+    "name": "shoplist",
     "orientation": "portrait",
     "plugins": ["expo-router", "expo-notifications"],
-    "scheme": "taskly",
-    "slug": "taskly",
+    "scheme": "shoplist",
+    "slug": "shoplist",
     "splash": {
       "backgroundColor": "#ffffff",
       "image": "./assets/splash.png",

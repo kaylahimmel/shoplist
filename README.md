@@ -1,10 +1,10 @@
-# Taskly 📱
+# ShopList 📱
 
-A modern, intuitive shopping list app built with React Native and Expo. Taskly helps you organize your grocery shopping with a clean, user-friendly interface and smooth animations.
+A modern, intuitive shopping list app built with React Native and Expo. ShopList helps you organize your grocery shopping with a clean, user-friendly interface and smooth animations.
 
 ## 📋 App Description
 
-Taskly is a simple yet powerful shopping list application that allows users to:
+ShopList is a simple yet powerful shopping list application that allows users to:
 
 - Create and manage shopping lists with ease
 - Add items quickly with a simple text input
@@ -54,7 +54,7 @@ The app features a minimalist design focused on functionality and user experienc
 
 ```bash
 git clone <repository-url>
-cd taskly
+cd shoplist
 ```
 
 2. Install dependencies:
@@ -151,7 +151,7 @@ npm run android
 ## 📁 Project Structure
 
 ```bash
-taskly/
+shoplist/
 ├── app/                    # App screens and navigation
 │   ├── _layout.tsx        # Root layout configuration
 │   ├── index.tsx          # Home/login screen
@@ -184,4 +184,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Taskly** - Making grocery shopping simple and organized! 🛒✨
+**ShopList** - Making grocery shopping simple and organized! 🛒✨
