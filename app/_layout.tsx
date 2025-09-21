@@ -8,28 +8,19 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Grocery List',
-          tabBarIcon: ({ color, size }) => {
-            return (
-              <Entypo
-                name="list"
-                size={size}
-                color={color}
-              />
-            );
-          },
+          href: null, // Hide from tab bar
         }}
       />
       <Tabs.Screen
-        name="counter"
+        name="categories"
         options={{
-          title: 'Counter',
+          title: 'Categories',
           headerShown: false,
           tabBarIcon: ({ color, size }) => {
             {
               return (
                 <Entypo
-                  name="time-slot"
+                  name="menu"
                   size={size}
                   color={color}
                 />
@@ -39,13 +30,28 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
-        name="idea"
+        name="profile"
         options={{
-          title: 'Idea',
+          title: 'Profile',
           tabBarIcon: ({ color, size }) => {
             return (
               <Entypo
-                name="light-bulb"
+                name="image"
+                size={size}
+                color={color}
+              />
+            );
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="groceryList"
+        options={{
+          title: 'Shopping List',
+          tabBarIcon: ({ color, size }) => {
+            return (
+              <Entypo
+                name="list"
                 size={size}
                 color={color}
               />
