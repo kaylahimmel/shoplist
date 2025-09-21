@@ -1,5 +1,12 @@
 # ShopList - Development Roadmap 📋
 
+## UI/Logic Additions
+
+- [ ] **Login Screen**: Build out login screen to replace placeholder
+- [ ] **Profile Screen**: Build out Profile screen for user, replacing placeholder
+- [ ] **Categories Screen**: Build out Shopping Categories screen for use in tagging/organizing items in the shopping list
+- [ ] **ListByStore Screen**: Build out a ListByStore screen to show each of the shopping lists
+
 ## Multi-User & Collaboration
 
 - [ ] **Family Sharing**: Allow multiple users to collaborate on shared shopping lists
